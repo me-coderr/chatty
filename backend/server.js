@@ -4,10 +4,16 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const { chats } = require("./data");
+const { connectDB } = require("./config/db");
 
 const app = express();
 
+connectDB();
 app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
+app.get("/api/home", (req, res) => {
   res.send("API is running");
 });
 

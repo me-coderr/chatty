@@ -3,12 +3,8 @@ import axios from "axios";
 
 const ChatPage = () => {
   const fetchChats = async () => {
-    try {
-      const response = await axios.get("/api/chats");
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching chats:", error);
-    }
+    const data = await axios.get("/api/chats");
+    console.log(data);
   };
 
   useEffect(() => {

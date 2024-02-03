@@ -1,8 +1,8 @@
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Home from "./Components/Home/HomePage";
-import ChatPage from "./Components/Chat/ChatPage";
+import Home from "./Pages/Home/HomePage";
+import ChatPage from "./Pages/Chat/ChatPage";
 
 function App() {
   return (

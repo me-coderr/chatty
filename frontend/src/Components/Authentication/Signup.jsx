@@ -75,7 +75,7 @@ const Signup = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <FormControl id="picture" isRequired>
+      <FormControl id="picture">
         <FormLabel>Upload Your Picture</FormLabel>
         <Input
           type="file"

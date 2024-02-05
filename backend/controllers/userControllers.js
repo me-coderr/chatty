@@ -12,7 +12,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
+    res.status(400).json({
+      description: "user alredy exists",
+    });
     throw new Error("User already exists");
   }
 
@@ -30,10 +32,11 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       picture: user.picture,
       token: generateToken(user._id),
-      message: "User Registered Successfully",
     });
   } else {
-    res.status(400);
+    res.status(400).json({
+      description: "error in registering new user",
+    });
     throw new Error("Error in registering new user");
   }
 });
@@ -50,7 +53,6 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       picture: user.picture,
       token: generateToken(user._id),
-      message: "User Logged In Succesfully",
     });
   } else {
     res.status(400);

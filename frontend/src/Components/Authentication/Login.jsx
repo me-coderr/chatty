@@ -8,11 +8,45 @@ import {
   VStack,
   Button,
 } from "@chakra-ui/react";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const submitHandler = async (e) => {
+    setLoading(true);
+    if (!email || !password) {
+      console.log("fields missing");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/api/user/login",
+        {
+          email,
+          password,
+        },
+        config
+      );
+      console.log(data);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
 
   return (
     <VStack spacing={"5px"}>
@@ -43,10 +77,11 @@ const Login = () => {
         </InputGroup>
       </FormControl>
       <Button
+        isLoading={loading}
         colorScheme="blue"
         w={"100%"}
         marginTop={"15px"}
-        onClick={() => submitHandler}
+        onClick={() => submitHandler()}
       >
         Login
       </Button>

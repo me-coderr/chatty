@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   FormControl,
@@ -7,6 +9,7 @@ import {
   InputGroup,
   InputRightElement,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 
 const Signup = () => {
@@ -17,9 +20,135 @@ const Signup = () => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [picture, setPicture] = useState();
+  const [loading, setLoading] = useState();
+  const toast = useToast();
+  const navigate = useNavigate();
 
-  const postDetails = () => {};
-  const submitHandler = () => {};
+  const URL = "https://api.cloudinary.com/v1_1/dsiwgomkc/image/upload";
+
+  const postDetails = (picture) => {
+    setLoading(true);
+    if (picture === undefined) {
+      // toast({
+      //   colorScheme: "red",
+      //   title: "Please select an image",
+      //   status: "Warning",
+      //   duration: 3000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      console.log("please select an image");
+      setLoading(false);
+      return;
+    }
+
+    if (picture.type === "image/jpeg" || picture.type === "image/png") {
+      const data = new FormData();
+      data.append("file", picture);
+      data.append("upload_preset", "chatty");
+      data.append("cloud_name", "dsiwgomkc");
+      fetch("https://api.cloudinary.com/v1_1/dsiwgomkc/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPicture(data.url.toString());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      // toast({
+      //   colorScheme: "red",
+      //   title: "Please select an image",
+      //   status: "Warning",
+      //   duration: 3000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      console.log("please select an image");
+      setLoading(false);
+    }
+    return;
+  };
+
+  const submitHandler = async () => {
+    setLoading(true);
+    if (!name || !password || !confirmPassword || !email) {
+      // toast({
+      //   colorScheme: "red",
+      //   title: "Please fill all the Required Fields",
+      //   status: "Warning",
+      //   duration: 3000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      console.log("please fill all fields");
+      setLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      // toast({
+      //   colorScheme: "red",
+      //   title: "Confirm password doesn't match",
+      //   status: "Warning",
+      //   duration: 3000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      console.log("confirm password doesnt match");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/api/user",
+        {
+          name,
+          email,
+          password,
+          picture,
+        },
+        config
+      );
+      console.log(data);
+      // toast({
+      //   colorScheme: "red",
+      //   title: "User registered",
+      //   status: "Success",
+      //   duration: 3000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      console.log("user registered");
+      setLoading(false);
+      localStorage.setItem(`userInfo`, JSON.stringify(data));
+      navigate("/home");
+    } catch (err) {
+      // toast({
+      //   colorScheme: "red",
+      //   title: "Error occured",
+      //   description: err.response.data.message,
+      //   status: "Warning",
+      //   duration: 3000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      console.log("error occcured");
+      setLoading(false);
+    }
+  };
 
   return (
     <VStack spacing={"5px"}>
@@ -89,7 +218,8 @@ const Signup = () => {
         colorScheme="blue"
         w={"100%"}
         marginTop={"15px"}
-        onClick={() => submitHandler}
+        onClick={(e) => submitHandler()}
+        isLoading={loading}
       >
         Sign up
       </Button>

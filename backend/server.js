@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 5000;
 const { chats } = require("./data");
 const { connectDB } = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -14,6 +15,7 @@ connectDB();
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running");

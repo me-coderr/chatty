@@ -9,8 +9,8 @@ import {
   InputGroup,
   InputRightElement,
   VStack,
-  useToast,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,14 +29,14 @@ const Signup = () => {
   const postDetails = (picture) => {
     setLoading(true);
     if (picture === undefined) {
-      // toast({
-      //   colorScheme: "red",
-      //   title: "Please select an image",
-      //   status: "Warning",
-      //   duration: 3000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
+      toast({
+        colorScheme: "red",
+        title: "Please select an image",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("please select an image");
       setLoading(false);
       return;
@@ -61,14 +61,14 @@ const Signup = () => {
           setLoading(false);
         });
     } else {
-      // toast({
-      //   colorScheme: "red",
-      //   title: "Please select an image",
-      //   status: "Warning",
-      //   duration: 3000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
+      toast({
+        colorScheme: "red",
+        title: "Please select an image",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("please select an image");
       setLoading(false);
     }
@@ -78,28 +78,28 @@ const Signup = () => {
   const submitHandler = async () => {
     setLoading(true);
     if (!name || !password || !confirmPassword || !email) {
-      // toast({
-      //   colorScheme: "red",
-      //   title: "Please fill all the Required Fields",
-      //   status: "Warning",
-      //   duration: 3000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
+      toast({
+        colorScheme: "red",
+        title: "Please fill all the Required Fields",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("please fill all fields");
       setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      // toast({
-      //   colorScheme: "red",
-      //   title: "Confirm password doesn't match",
-      //   status: "Warning",
-      //   duration: 3000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
+      toast({
+        colorScheme: "red",
+        title: "Confirm password doesn't match",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("confirm password doesnt match");
       setLoading(false);
       return;
@@ -123,28 +123,28 @@ const Signup = () => {
         config
       );
       console.log(data);
-      // toast({
-      //   colorScheme: "red",
-      //   title: "User registered",
-      //   status: "Success",
-      //   duration: 3000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
+      toast({
+        colorScheme: "red",
+        title: "User registered",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("user registered");
       setLoading(false);
       localStorage.setItem(`userInfo`, JSON.stringify(data));
-      navigate("/home");
+      navigate("/chat");
     } catch (err) {
-      // toast({
-      //   colorScheme: "red",
-      //   title: "Error occured",
-      //   description: err.response.data.message,
-      //   status: "Warning",
-      //   duration: 3000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
+      toast({
+        colorScheme: "red",
+        title: "Error occured",
+        description: err.response.data.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("error occcured");
       setLoading(false);
     }

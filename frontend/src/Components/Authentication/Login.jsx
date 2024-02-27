@@ -7,19 +7,30 @@ import {
   InputRightElement,
   VStack,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     setLoading(true);
     if (!email || !password) {
-      console.log("fields missing");
+      // console.log("fields missing");
+      toast({
+        title: "fields missing",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       setLoading(false);
       return;
     }
@@ -41,9 +52,24 @@ const Login = () => {
       );
       console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
+      toast({
+        title: "user logged in successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       setLoading(false);
+      navigate("/chat");
     } catch (err) {
       console.error(err);
+      toast({
+        title: "error occured",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
       setLoading(false);
     }
   };
@@ -55,6 +81,7 @@ const Login = () => {
         <Input
           placeholder="Enter Your Email"
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
       </FormControl>
       <FormControl id="login-password" isRequired>
@@ -64,6 +91,7 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Enter Your Password"
             onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
           <InputRightElement w={"4.5rem"}>
             <Button
@@ -95,7 +123,7 @@ const Login = () => {
           setPassword("guestUserPassword");
         }}
       >
-        Guest User
+        Get Guest User Credentials
       </Button>
     </VStack>
   );

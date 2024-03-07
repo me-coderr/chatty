@@ -23,7 +23,6 @@ const Login = () => {
   const submitHandler = async (e) => {
     setLoading(true);
     if (!email || !password) {
-      // console.log("fields missing");
       toast({
         title: "fields missing",
         status: "warning",
@@ -60,7 +59,7 @@ const Login = () => {
         position: "bottom",
       });
       setLoading(false);
-      navigate("/chat");
+      navigate("/chats");
     } catch (err) {
       console.error(err);
       toast({

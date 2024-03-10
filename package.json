@@ -1,0 +1,14 @@
+{
+    "name" : "chatty",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "start": "node backend/server.js", 
+        "server": "nodemon backend/server.js",
+        "build": "npm install --legacy-peer-deps && npm install --prefix frontend --legacy-peer-deps && npm run build --prefix frontend"
+    },
+    "keywords": [
+        "mern",
+        "chatty"
+    ]
+}

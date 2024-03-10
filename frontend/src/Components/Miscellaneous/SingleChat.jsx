@@ -16,11 +16,18 @@ import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5183";
+let socket, selectedChatCompare;
 
 const SingleChat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const toast = useToast();
   const {
     user,
@@ -29,10 +36,13 @@ const SingleChat = () => {
     selectedChat,
     fetchAgain,
     setFetchAgain,
+    notifications,
+    setNotifications,
   } = ChatState();
 
   const sendMessage = async (e) => {
     if (e.key === "Enter" && newMessage) {
+      socket.emit("stop typing", selectedChat._id);
       setNewMessage("");
       try {
         const config = {
@@ -50,8 +60,11 @@ const SingleChat = () => {
           },
           config
         );
+        setTyping(false);
         setMessages([...messages, data]);
-        console.log(data);
+        // console.log(data);
+
+        socket.emit("new message", data);
       } catch (err) {
         toast({
           title: "Error occured!",
@@ -84,6 +97,7 @@ const SingleChat = () => {
 
       setMessages(data);
       setLoading(false);
+      socket.emit("join chat", selectedChat._id);
     } catch (err) {
       setLoading(false);
       toast({
@@ -99,11 +113,64 @@ const SingleChat = () => {
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
+
+    // console.log(typing);
+
+    if (!socketConnected) {
+      return;
+    }
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDifference = timeNow - lastTypingTime;
+
+      if (timeDifference >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
 
   useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.emit("setup", user);
+    socket.on("typing", () => {
+      setIsTyping(true);
+    });
+    socket.on("stop typing", () => {
+      setIsTyping(false);
+    });
+  }, []);
+
+  useEffect(() => {
     fetchAllMessages();
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        if (!notifications.includes(newMessageRecieved)) {
+          setNotifications([newMessageRecieved, ...notifications]);
+          setFetchAgain(!fetchAgain);
+        }
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
 
   return (
     <>
@@ -165,6 +232,7 @@ const SingleChat = () => {
             h={"92%"}
             borderRadius={"1g"}
             overflowY={"hidden"}
+            color={"black"}
           >
             {loading ? (
               <Spinner
@@ -176,12 +244,19 @@ const SingleChat = () => {
                 color="black"
               />
             ) : (
-              <div className="messages">
+              <div style={{ height: "92%" }} className="messages">
                 <ScrollableChat messages={messages} />
               </div>
             )}
 
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              {isTyping ? (
+                <div style={{ textAlign: "left", fontSize: "18px" }}>
+                  Typing...
+                </div>
+              ) : (
+                <></>
+              )}
               <Input
                 placeholder="Enter text here"
                 variant={"filled"}

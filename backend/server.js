@@ -9,6 +9,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
+const cors = require("cors");
 
 const app = express();
 
@@ -16,6 +17,13 @@ console.log(process.env.PORT);
 
 connectDB();
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "https://chatty-1.onrender.com",
+    methods: ["GET", "POST", "PUT"],
+  })
+);
 
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);

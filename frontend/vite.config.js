@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://127.0.0.1:5183/api",
+        // target: "http://127.0.0.1:5183/api",
+        target: "https://chatty-2ikm.onrender.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

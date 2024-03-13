@@ -134,7 +134,7 @@ const Signup = () => {
       console.log("user registered");
       setLoading(false);
       localStorage.setItem(`userInfo`, JSON.stringify(data));
-      navigate("/chat");
+      navigate("/chats");
     } catch (err) {
       toast({
         colorScheme: "red",

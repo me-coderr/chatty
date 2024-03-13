@@ -12,6 +12,8 @@ const path = require("path");
 
 const app = express();
 
+console.log(process.env.PORT);
+
 connectDB();
 app.use(express.json());
 

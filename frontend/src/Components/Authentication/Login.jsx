@@ -62,7 +62,7 @@ const Login = () => {
       });
       setLoading(false);
       setUser(data);
-      // navigate("/chats");
+      navigate("/");
     } catch (err) {
       console.error(err);
       toast({

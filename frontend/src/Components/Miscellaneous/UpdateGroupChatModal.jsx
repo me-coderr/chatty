@@ -64,7 +64,7 @@ const UpdateGroupChatModal = ({ fetchAllMessages }) => {
       };
 
       const { data } = await axios.put(
-        "/api/chat/group/add",
+        "https://chatty-2ikm.onrender.com/api/chat/group/add",
         {
           chatId: selectedChat._id,
           userId: userToAdd._id,
@@ -111,7 +111,7 @@ const UpdateGroupChatModal = ({ fetchAllMessages }) => {
       };
 
       const { data } = await axios.put(
-        "/api/chat/group/remove",
+        "https://chatty-2ikm.onrender.com/api/chat/group/remove",
         {
           chatId: selectedChat._id,
           userId: userToRemove._id,
@@ -154,7 +154,7 @@ const UpdateGroupChatModal = ({ fetchAllMessages }) => {
       };
 
       const { data } = await axios.put(
-        "/api/chat/group/rename",
+        "https://chatty-2ikm.onrender.com/api/chat/group/rename",
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -193,7 +193,10 @@ const UpdateGroupChatModal = ({ fetchAllMessages }) => {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `https://chatty-2ikm.onrender.com/api/user?search=${search}`,
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (err) {

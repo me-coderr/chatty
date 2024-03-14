@@ -113,7 +113,7 @@ const Signup = () => {
       };
 
       const { data } = await axios.post(
-        "/api/user",
+        "https://chatty-2ikm.onrender.com/api/user",
         {
           name,
           email,

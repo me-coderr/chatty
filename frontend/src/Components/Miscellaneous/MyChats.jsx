@@ -40,7 +40,10 @@ const MyChats = () => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(
+        "https://chatty-2ikm.onrender.com/api/chat",
+        config
+      );
       setChats(data);
     } catch (err) {
       toast({

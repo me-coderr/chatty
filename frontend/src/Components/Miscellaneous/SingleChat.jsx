@@ -53,7 +53,7 @@ const SingleChat = () => {
         };
 
         const { data } = await axios.post(
-          "/api/message/",
+          "https://chatty-2ikm.onrender.com/api/message/",
           {
             content: newMessage,
             chatId: selectedChat._id,
@@ -91,7 +91,7 @@ const SingleChat = () => {
       };
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `https://chatty-2ikm.onrender.com/api/message/${selectedChat._id}`,
         config
       );
 

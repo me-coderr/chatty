@@ -18,7 +18,7 @@ import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5183";
+const ENDPOINT = "https://chatty-2ikm.onrender.com/";
 let socket, selectedChatCompare;
 
 const SingleChat = () => {

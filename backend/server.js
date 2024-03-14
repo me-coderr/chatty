@@ -16,8 +16,8 @@ const app = express();
 console.log(process.env.PORT);
 
 const allowedOrigins = [
-  "https://main--lucky-torrone-096748.netlify.app/",
-  "https://chatty-1.onrender.com/",
+  "https://main--lucky-torrone-096748.netlify.app",
+  "https://chatty-1.onrender.com",
   "http://localhost:5173",
 ];
 const corsOptions = {
@@ -80,7 +80,8 @@ const io = require("socket.io")(server, {
       // Check if the origin is allowed
       if (
         origin === "http://localhost:5173" || // Update with your localhost link
-        origin === "https://chatty-1.onrender.com"
+        origin === "https://chatty-1.onrender.com" ||
+        origin === "https://main--lucky-torrone-096748.netlify.app"
       ) {
         callback(null, true); // Allow the origin
       } else {

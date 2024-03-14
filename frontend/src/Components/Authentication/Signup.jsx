@@ -11,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import { ChatState } from "../../Context/ChatProvider";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +24,7 @@ const Signup = () => {
   const [loading, setLoading] = useState();
   const toast = useToast();
   const navigate = useNavigate();
+  const { setUser } = ChatState();
 
   const URL = "https://api.cloudinary.com/v1_1/dsiwgomkc/image/upload";
 
@@ -134,7 +136,8 @@ const Signup = () => {
       console.log("user registered");
       setLoading(false);
       localStorage.setItem(`userInfo`, JSON.stringify(data));
-      navigate("/chats");
+      setUser(data);
+      navigate("/");
     } catch (err) {
       toast({
         colorScheme: "red",

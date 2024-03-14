@@ -21,7 +21,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const check = async () => {
-    const { data } = axios.get("/api/test");
+    const { data } = axios.get("https://chatty-2ikm.onrender.com/api/test");
     console.log(data);
   };
 
@@ -51,7 +51,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/user/login",
+        "https://chatty-2ikm.onrender.com/api/user/login",
         {
           email,
           password,

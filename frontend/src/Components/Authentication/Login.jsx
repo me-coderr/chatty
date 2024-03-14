@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -19,6 +19,15 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+
+  const check = async () => {
+    const { data } = axios.get("/api/test");
+    console.log(data);
+  };
+
+  useEffect(() => {
+    check();
+  });
 
   const submitHandler = async (e) => {
     setLoading(true);

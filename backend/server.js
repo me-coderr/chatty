@@ -38,6 +38,11 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
+app.get("/api/test/", (req, res) => {
+  console.log("server is listening to the client, test success");
+  res.status(200).send("all good");
+});
+
 app.get("/api/home", (req, res) => {
   res.send("API is running");
 });

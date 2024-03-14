@@ -15,12 +15,10 @@ const app = express();
 
 console.log(process.env.PORT);
 
-connectDB();
-app.use(express.json());
-
 const allowedOrigins = [
   "https://main--lucky-torrone-096748.netlify.app/",
   "https://chatty-1.onrender.com/",
+  "https://localhost:5173",
 ];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -34,12 +32,16 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+connectDB();
+app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
 app.get("/api/test/", (req, res) => {
   console.log("server is listening to the client, test success");
+  const origin = req.get("Origin") || req.headers.origin;
+  console.log("client hit this endpoint : ", origin);
   res.status(200).send({ data: "all good" });
 });
 
@@ -72,7 +74,20 @@ const server = app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
-  cors: { origin: "https://chatty-1.onrender.com" },
+  cors: {
+    // origin: "https://chatty-1.onrender.com"
+    origin: function (origin, callback) {
+      // Check if the origin is allowed
+      if (
+        origin === "http://localhost:5173" || // Update with your localhost link
+        origin === "https://chatty-1.onrender.com"
+      ) {
+        callback(null, true); // Allow the origin
+      } else {
+        callback(new Error("Not allowed by CORS")); // Deny the origin
+      }
+    },
+  },
 });
 
 io.on("connection", (socket) => {

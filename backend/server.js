@@ -18,7 +18,7 @@ console.log(process.env.PORT);
 const allowedOrigins = [
   "https://main--lucky-torrone-096748.netlify.app/",
   "https://chatty-1.onrender.com/",
-  "https://localhost:5173",
+  "http://localhost:5173",
 ];
 const corsOptions = {
   origin: function (origin, callback) {

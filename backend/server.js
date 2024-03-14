@@ -18,12 +18,21 @@ console.log(process.env.PORT);
 connectDB();
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "https://chatty-1.onrender.com",
-    methods: ["GET", "POST", "PUT"],
-  })
-);
+const allowedOrigins = [
+  "https://main--lucky-torrone-096748.netlify.app/",
+  "https://chatty-1.onrender.com/",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);

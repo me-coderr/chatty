@@ -10,7 +10,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ChatState } from "../../Context/ChatProvider";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -18,16 +19,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const { setUser } = ChatState();
   const navigate = useNavigate();
-
-  const check = async () => {
-    const { data } = axios.get("https://chatty-2ikm.onrender.com/api/test");
-    console.log(data);
-  };
-
-  useEffect(() => {
-    check();
-  });
 
   const submitHandler = async (e) => {
     setLoading(true);
@@ -68,7 +61,8 @@ const Login = () => {
         position: "bottom",
       });
       setLoading(false);
-      navigate("/chats");
+      setUser(data);
+      // navigate("/chats");
     } catch (err) {
       console.error(err);
       toast({

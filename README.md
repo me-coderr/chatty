@@ -1,4 +1,5 @@
 Live link: https://chatty-1.onrender.com/
 
 Please note: Deployed applications has issues.
-Try installing it locally, it will work erfectly fine.
+The issue is in the Navigation Hook from react-router-dom and will be fixed today.
+

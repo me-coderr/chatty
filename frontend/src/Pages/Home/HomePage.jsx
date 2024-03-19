@@ -50,10 +50,10 @@ const Home = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Login navigate={navigate} />
+              <Login />
             </TabPanel>
             <TabPanel>
-              <Signup navigate={navigate} />
+              <Signup />
             </TabPanel>
           </TabPanels>
         </Tabs>

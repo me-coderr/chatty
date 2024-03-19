@@ -13,14 +13,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";
 
-const Login = ({ navigate }) => {
+const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { setUser } = ChatState();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     setLoading(true);

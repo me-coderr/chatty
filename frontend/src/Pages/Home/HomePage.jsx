@@ -8,14 +8,16 @@ import { ChatState } from "../../Context/ChatProvider";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { user } = ChatState();
+  const { setUser } = ChatState();
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userInfo"));
 
     if (userData) {
+      // console.log("\n\n\nin use effect of home page after logging in\n\n\n");
+      setUser(userData);
       navigate("/chats");
     }
-  }, [navigate, user]);
+  }, [navigate]);
 
   return (
     <Container maxW="xl" centerContent>
@@ -48,10 +50,10 @@ const Home = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Login />
+              <Login navigate={navigate} />
             </TabPanel>
             <TabPanel>
-              <Signup />
+              <Signup navigate={navigate} />
             </TabPanel>
           </TabPanels>
         </Tabs>

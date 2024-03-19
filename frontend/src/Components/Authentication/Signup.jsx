@@ -126,7 +126,7 @@ const Signup = () => {
       );
       console.log(data);
       toast({
-        colorScheme: "red",
+        colorScheme: "green",
         title: "User registered",
         status: "success",
         duration: 3000,
@@ -137,7 +137,7 @@ const Signup = () => {
       setLoading(false);
       localStorage.setItem(`userInfo`, JSON.stringify(data));
       setUser(data);
-      navigate("/");
+      navigate("/chats");
     } catch (err) {
       toast({
         colorScheme: "red",

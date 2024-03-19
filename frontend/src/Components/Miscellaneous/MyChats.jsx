@@ -15,7 +15,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { getSender } from "../../Config/ChatLogic";
 
 const MyChats = () => {
-  const [loggedUser, setLoggedUser] = useState();
+  // const [loggedUser, setLoggedUser] = useState();
   const {
     selectedChat,
     setSelectedChat,
@@ -28,7 +28,7 @@ const MyChats = () => {
   const toast = useToast();
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    // setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
   }, [fetchAgain]);
 
@@ -123,7 +123,8 @@ const MyChats = () => {
                     <Box>
                       <Text>
                         {!chat.isGroupChat
-                          ? getSender(loggedUser, chat.users)
+                          ? // ? getSender(loggedUser, chat.users)
+                            getSender(user, chat.users)
                           : chat.chatName}
                       </Text>
                     </Box>

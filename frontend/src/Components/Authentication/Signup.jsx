@@ -23,7 +23,7 @@ const Signup = () => {
   const [picture, setPicture] = useState();
   const [loading, setLoading] = useState();
   const toast = useToast();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user, setUser } = ChatState();
 
   // useEffect(() => {
@@ -143,7 +143,7 @@ const Signup = () => {
       setLoading(false);
       localStorage.setItem(`userInfo`, JSON.stringify(data));
       setUser(data);
-      navigate("/chats");
+      // navigate("/chats");
     } catch (err) {
       toast({
         colorScheme: "red",

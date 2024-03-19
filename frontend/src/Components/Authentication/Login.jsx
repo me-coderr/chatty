@@ -20,7 +20,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { user, setUser } = ChatState();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (user) {

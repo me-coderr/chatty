@@ -9,6 +9,27 @@ import ChatBox from "../../Components/Miscellaneous/ChatBox";
 const ChatPage = () => {
   const { user } = ChatState();
 
+  useEffect(() => {
+    console.log("hello from /chats route");
+    console.log(user);
+    console.log("-------------");
+  }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+      console.log("hello as you refreshed");
+      navigate("/");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   return (
     <div style={{ width: "100%" }}>
       {user && <SideDrawer />}

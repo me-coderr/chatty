@@ -19,8 +19,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  const { setUser } = ChatState();
+  const { user, setUser } = ChatState();
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/chats");
+  //   }
+  // }, [user]);
 
   const submitHandler = async (e) => {
     setLoading(true);
@@ -62,7 +68,7 @@ const Login = () => {
       });
       setLoading(false);
       setUser(data);
-      navigate("/chats");
+      // navigate("/chats");
     } catch (err) {
       console.error(err);
       toast({

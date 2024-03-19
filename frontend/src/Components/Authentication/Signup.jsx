@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -24,7 +24,13 @@ const Signup = () => {
   const [loading, setLoading] = useState();
   const toast = useToast();
   const navigate = useNavigate();
-  const { setUser } = ChatState();
+  const { user, setUser } = ChatState();
+
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/chats");
+  //   }
+  // }, [user]);
 
   const URL = "https://api.cloudinary.com/v1_1/dsiwgomkc/image/upload";
 

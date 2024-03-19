@@ -8,7 +8,7 @@ import { ChatState } from "../../Context/ChatProvider";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { setUser } = ChatState();
+  const { user, setUser } = ChatState();
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -17,7 +17,7 @@ const Home = () => {
       setUser(userData);
       navigate("/chats");
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   return (
     <Container maxW="xl" centerContent>

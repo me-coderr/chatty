@@ -1,6 +1,7 @@
+Status: LIVE
+
 Live link: https://chatty-1.onrender.com/
 
-Please note: Deployed applications has issues.
-[18-03-2024]
-The issue is in the Navigation Hook from react-router-dom and will be fixed today.
+A fully functional live time chat application with group and private chat functionalities.
 
+Tech used: HTML, CSS, Javascript, ReactJS, NodeJS, MongoDB, SocketIO.
